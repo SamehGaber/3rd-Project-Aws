@@ -1,0 +1,5 @@
+Public GitHub Repo : https://github.com/SamehGaber/3rd-Project-Aws
+public URL for your S3 Bucket   :  http://udapeople-20ef7de.s3-website-us-west-2.amazonaws.com
+Public URL for CloudFront Distribution : http://d2nz0caf6fx4ju.cloudfront.net
+Public URL for back-end server in EC2 ec2-34-220-210-175.us-west-2.compute.amazonaws.com 
+Public URL for Prometheus Server   : ec2-54-190-195-227.us-west-2.compute.amazonaws.com
