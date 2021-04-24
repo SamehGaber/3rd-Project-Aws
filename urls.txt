@@ -1,6 +1,6 @@
 Public GitHub Repo : https://github.com/SamehGaber/3rd-Project-Aws
-public URL for your S3 Bucket   :  http://udapeople-d3e8dab.s3-website-us-west-2.amazonaws.com
-Public URL for CloudFront Distribution : http://daqjixdtc0mup.cloudfront.net
-Public URL for back-end server in EC2 ec2-35-160-67-16.us-west-2.compute.amazonaws.com
-Public URL for Prometheus Server   : ec2-54-190-195-227.us-west-2.compute.amazonaws.com
+public URL for your S3 Bucket   :  http://udapeople-ff86e19.s3-website-us-west-2.amazonaws.com
+Public URL for CloudFront Distribution : http://d38it8u3ggr8o4.cloudfront.net
+Public URL for back-end server in EC2 ec2-54-245-203-113.us-west-2.compute.amazonaws.com
+Public URL for Prometheus Server   : ec2-54-190-195-227.us-west-2.compute.amazonaws.com:9090
 Circl CI pipeline URL : https://app.circleci.com/pipelines/github/SamehGaber/3rd-Project-Aws
