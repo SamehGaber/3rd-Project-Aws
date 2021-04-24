@@ -332,6 +332,8 @@ jobs:
       - checkout
       - restore_cache:
           key: frontend-build-updated
+      - attach_workspace:       # attach workspace.
+         at: ~/
       - run:
           name: Install dependencies (aws cli)
           command: |
@@ -345,24 +347,22 @@ jobs:
           command: |
             # your code here
             # http://18.236.164.143:3030
-            export URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
+            export API_URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request GET \
             http://api.memstash.io/values/Backend_URL)
-            echo $URL
-            if curl ${URL}/api/status
-            then
-              echo "It worked!"
-            else
-              echo "It failed"
-              #return 1
-            fi
-            npm install
-            npm run build
+            echo $API_URL
+            echo ENVIRONMENT=production > "frontend/.env"
+            echo NODE_ENV=production >> "frontend/.env"
+            echo $API_URL >> "frontend/.env"
+            cat frontend/.env
+
+
 
       - run:
           name: Deploy frontend objects
           command: |
-            echo "test"
+            npm install
+            npm run build
       - run:
           name: move frontend objects to S3
           working_directory: ./frontend
