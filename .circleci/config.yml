@@ -1,5 +1,7 @@
 version: 2.1
-
+orbs:
+  node: 'circleci/node:4.1'
+  slack: circleci/slack@4.1
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -53,6 +55,8 @@ commands:
             
 jobs:
   pre-test:
+    executor:
+      name: node/defaul
     docker:
       - image: amazon/aws-cli
     steps:
@@ -61,6 +65,10 @@ jobs:
           name: pre-test
           command: |
             echo "pre-test"
+      - slack/notify:
+          channel: allgemein
+          event: fail
+          template: basic_fail_1
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
       - revert-migrations:
@@ -529,10 +537,13 @@ jobs:
 workflows:
   default:
     jobs:
-#     - pre-test:
-#         filters:
-#           branches:
-#             only: [test-feature-branch]
+      - pre-test:
+          context: 
+            - slack-secrets
+            - SLACK_ACCESS_TOKEN
+          filters:
+            branches:
+              only: [test-feature-branch]
 #     - test:
 #         filters:
 #           branches:
