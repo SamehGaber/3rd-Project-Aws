@@ -65,7 +65,7 @@ jobs:
             return 1
       - run:
           name: customer slack msg
-          command: 
+          command: |
             send_slack_messages_on_fail:
               steps:
                 - slack/status:
@@ -541,7 +541,6 @@ workflows:
     jobs:
       - pre-test:
           context: 
-            - slack-secrets
             - SLACK_ACCESS_TOKEN
           filters:
             branches:
