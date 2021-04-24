@@ -61,11 +61,23 @@ jobs:
           name: pre-test
           command: |
             echo "pre-test"
-            return 1
       - slack/notify:
-          channel: allgemeine
-          event: fail
-          template: basic_fail_1
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
       - revert-migrations:
@@ -558,7 +570,7 @@ workflows:
 #         requires: [build-frontend]
       - deploy-infrastructure:
 #         requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          requires: [pre-test]
+          requires: [test]
           filters:
             branches:
              only: [test-feature-branch]
