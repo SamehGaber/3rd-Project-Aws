@@ -355,12 +355,13 @@ jobs:
               echo "It failed"
               #return 1
             fi
+            cd frontend
+            npm run build
 
       - run:
           name: Deploy frontend objects
           command: |
-            cd frontend
-            npm run build
+            echo "test"
       - run:
           name: move frontend objects to S3
           working_directory: ./frontend
