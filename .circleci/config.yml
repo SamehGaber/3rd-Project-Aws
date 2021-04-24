@@ -357,7 +357,6 @@ jobs:
             cat frontend/.env
 
 
-
       - run:
           name: Deploy frontend objects
           command: |
