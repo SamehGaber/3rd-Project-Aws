@@ -1,6 +1,4 @@
-
 ---
-
 - name: "install dependencies."
   become: true
   apt:
