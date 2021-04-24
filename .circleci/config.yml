@@ -341,6 +341,7 @@ jobs:
             sudo ./aws/install
       - run:
           name: Get backend url
+          working_directory: ./frontend
           command: |
             # your code here
             # http://18.236.164.143:3030
@@ -355,7 +356,7 @@ jobs:
               echo "It failed"
               #return 1
             fi
-            cd frontend
+            npm install
             npm run build
 
       - run:
