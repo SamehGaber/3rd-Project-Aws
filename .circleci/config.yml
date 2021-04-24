@@ -533,7 +533,7 @@ workflows:
       - pre-test:
           filters:
             branches:
-              only: [test-feature-branch]
+              only: [master]
 #     - test:
 #         filters:
 #           branches:
