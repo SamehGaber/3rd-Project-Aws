@@ -167,7 +167,7 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm audit fix #to fix vulnerabilities
+            npm audit fix 
             npm audit --audit-level=critical
 
   scan-backend:
