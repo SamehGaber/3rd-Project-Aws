@@ -544,7 +544,7 @@ workflows:
             - SLACK_ACCESS_TOKEN
           filters:
             branches:
-              only: [test-feature-branch]
+              only: [secondry]
 #     - test:
 #         filters:
 #           branches:
