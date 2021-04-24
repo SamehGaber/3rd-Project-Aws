@@ -22,7 +22,7 @@
 
 - name: uncompress the copied backend folder
   unarchive:
-    src: "/root/project/test.tar.gz"   #../../../../backend /.dist , /dist , 
+    src: "/root/project/test.tar.gz"   #../../../../backend /.dist , /dist ,  #in build , prev value was npm run build
     dest: "~/deploy"
 
 - name: Build
@@ -30,7 +30,7 @@
   shell: |
     cd /home/ubuntu/deploy/backend
     npm install
-    npm run build
+    npm run build   #
 
 - name: Executing node
   shell: |
