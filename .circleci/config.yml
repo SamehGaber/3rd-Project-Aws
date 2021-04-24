@@ -51,11 +51,17 @@ commands:
              npm run migrations:revert
             #  exit 1
             fi
-            
+  send_slack_messages_on_fail:
+    description: send a slack notification    
+    steps:
+       - slack/status:
+           fail_only: true
+           failure_message: ':red_circle: $CIRCLE_JOB job has failed! Visit here: $CIRCLE_BUILD_URL'     
 jobs:
   pre-test:
     docker:
       - image: amazon/aws-cli
+    executor: node
     steps:
       - checkout
       - run:
@@ -63,14 +69,7 @@ jobs:
           command: |
             echo "pre-test"
             return 1
-      - run:
-          name: customer slack msg
-          command: |
-            send_slack_messages_on_fail:
-              steps:
-                - slack/status:
-                    fail_only: true
-                    failure_message: ':red_circle: $CIRCLE_JOB job has failed! Visit here: $CIRCLE_BUILD_URL'
+      - send_slack_messages_on_fail
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
       - revert-migrations:
