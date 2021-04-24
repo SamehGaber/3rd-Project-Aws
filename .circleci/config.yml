@@ -50,13 +50,7 @@ commands:
             #  Add revert code here. You can find this in the Getting Started section.
              npm run migrations:revert
             #  exit 1
-            fi
-  send_slack_messages_on_fail:
-    description: send a slack notification    
-    steps:
-       - slack/notify:
-           fail_only: true
-           failure_message: ':red_circle: $CIRCLE_JOB job has failed! Visit here: $CIRCLE_BUILD_URL'     
+            fi   
 jobs:
   pre-test:
     docker:
@@ -69,7 +63,10 @@ jobs:
           command: |
             echo "pre-test"
             return 1
-      - send_slack_messages_on_fail
+      - slack/notify:
+          channel: allgemeine
+          event: fail
+          template: basic_fail_1
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
       - revert-migrations:
