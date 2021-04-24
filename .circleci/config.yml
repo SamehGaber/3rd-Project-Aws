@@ -549,20 +549,20 @@ workflows:
 #         filters:
 #           branches:
 #             only: [test-feature-branch]
-      - build-frontend:
-         context:
-          - SLACK_ACCESS_TOKEN
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-           requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+#     - build-frontend:
+#        context:
+#         - SLACK_ACCESS_TOKEN
+#     - build-backend
+#     - test-frontend:
+#         requires: [build-frontend]
+#     - test-backend:
+#         requires: [build-backend]
+#     - scan-backend:
+#          requires: [build-backend]
+#     - scan-frontend:
+#         requires: [build-frontend]
+#     - deploy-infrastructure:
+#         requires: [test-frontend, test-backend, scan-frontend, scan-backend]
 #         requires: [pre-test]
           filters:
             branches:
