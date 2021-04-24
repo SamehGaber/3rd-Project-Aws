@@ -54,7 +54,7 @@ commands:
   send_slack_messages_on_fail:
     description: send a slack notification    
     steps:
-       - slack/status:
+       - slack/notify:
            fail_only: true
            failure_message: ':red_circle: $CIRCLE_JOB job has failed! Visit here: $CIRCLE_BUILD_URL'     
 jobs:
