@@ -55,7 +55,6 @@ jobs:
   pre-test:
     docker:
       - image: circleci/node:13.8.0 
-    executor: node
     steps:
       - checkout
       - run:
