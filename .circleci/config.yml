@@ -1,6 +1,5 @@
 version: 2.1
 orbs:
-  node: 'circleci/node:4.1'
   slack: circleci/slack@4.1
 commands:
   destroy-environment:
@@ -65,6 +64,7 @@ jobs:
           name: pre-test
           command: |
             echo "pre-test"
+            return 1
       - slack/notify:
           channel: allgemein
           event: fail
