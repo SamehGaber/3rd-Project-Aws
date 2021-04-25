@@ -71,13 +71,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Add back-end ip to ansible inventory
+          name: Add back-end ip to ansible backend/.envtory
           command: |
             yum -y install tar gzip
             echo "what !"
             aws --version
             aws s3 ls 
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-ff86e19" --output text >> ~/project/.circleci/ansible/inventory.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-ff86e19" --output text >> ~/project/.circleci/ansible/backend/.envtory.txt
       - run:
          name: save backend url in memstash
          command: |
@@ -91,7 +91,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - project/.circleci/ansible/backend/.envtory.txt
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -208,10 +208,10 @@ jobs:
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
               
       - run:
-          name: Add back-end ip to ansible inventory
+          name: Add back-end ip to ansible backend/.envtory
           command: |
             yum -y install tar gzip
-            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text >> ~/project/.circleci/ansible/inventory.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text >> ~/project/.circleci/ansible/backend/.envtory.txt
             echo ${CIRCLE_WORKFLOW_ID:0:7}
       - run:
          name: save backend url in memstash
@@ -226,7 +226,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - project/.circleci/ansible/backend/.envtory.txt
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
@@ -244,7 +244,7 @@ jobs:
              - "e9:b7:ef:6b:70:b2:56:dc:c8:41:d7:12:6c:b7:a9:7e"    # Add ssh keys with fingerprint #this is "uda-people key"
       - attach_workspace:       # attach workspace.
          at: ~/
-      - run: cat ~/project/.circleci/ansible/inventory.txt   
+      - run: cat ~/project/.circleci/ansible/backend/.envtory.txt   
       - run:
           name: Install dependencies
           command: |
@@ -268,11 +268,11 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ansible-playbook ~/project/.circleci/ansible/configure-server.yml -i ~/project/.circleci/ansible/inventory.txt 
+            ansible-playbook ~/project/.circleci/ansible/configure-server.yml -i ~/project/.circleci/ansible/backend/.envtory.txt 
       - run:
           name: configure Node exporter for Prometheus
           command: |
-            ansible-playbook ~/project/.circleci/ansible/Node-Exporter.yml -i ~/project/.circleci/ansible/inventory.txt
+            ansible-playbook ~/project/.circleci/ansible/Node-Exporter.yml -i ~/project/.circleci/ansible/backend/.envtory.txt
       # Here's where you will add some code to rollback on failure      
       - destroy-environment:
           WorkflowID: "${CIRCLE_WORKFLOW_ID}"
@@ -346,6 +346,7 @@ jobs:
           working_directory: ./frontend
           command: |
             # your code here
+            pwd
             # http://18.236.164.143:3030
             export API_URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request GET \
@@ -385,7 +386,7 @@ jobs:
              - "e9:b7:ef:6b:70:b2:56:dc:c8:41:d7:12:6c:b7:a9:7e"    # Add ssh keys with fingerprint #this is "uda-people key"
       - attach_workspace:       # attach workspace.
          at: ~/
-      - run: cat ~/project/.circleci/ansible/inventory.txt   
+      - run: cat ~/project/.circleci/ansible/backend/.envtory.txt   
       - run:
           name: Install dependencies (ansible package)
           command: |
@@ -405,7 +406,7 @@ jobs:
             ls -la
             tar cvfz test.tar.gz backend/
             ls -la | grep test.tar.gz
-            ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/inventory.txt 
+            ansible-playbook ~/project/.circleci/ansible/deploy-backend.yml -i ~/project/.circleci/ansible/backend/.envtory.txt 
           no_output_timeout: 30m
       # Here's where you will add some code to rollback on failure  
       - destroy-environment:
