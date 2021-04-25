@@ -343,7 +343,6 @@ jobs:
             sudo ./aws/install
       - run:
           name: Get backend url
-          working_directory: ./frontend
           command: |
             # your code here
             pwd
@@ -352,14 +351,15 @@ jobs:
             --request GET \
             http://api.memstash.io/values/Backend_URL)
             echo $API_URL
-            sudo echo $API_URL > "/.env"
-            sudo cat /.env
+            sudo echo $API_URL > "frontend/.env"
+            sudo cat frontend/.env
 
 
 
       - run:
           name: Deploy frontend objects
           command: |
+            cd frontend
             npm install
             npm run build
       - run:
