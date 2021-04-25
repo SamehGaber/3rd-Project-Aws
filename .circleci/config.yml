@@ -404,7 +404,7 @@ jobs:
           name: Deploy backend
           working_directory: /root/project
           command: |
-            pwd
+            pwd 
             ls -la
             tar cvfz test.tar.gz backend/
             ls -la | grep test.tar.gz
