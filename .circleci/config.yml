@@ -351,12 +351,13 @@ jobs:
             --request GET \
             http://api.memstash.io/values/Backend_URL)
             echo $URL
-            mkdir frontend/.env
+            export API_URL="http://$(sed -n 2p .circleci/ansible/inventory.txt):3030"
+            echo "http://$(sed -n 2p .circleci/ansible/inventory.txt):3030"
             echo ENVIRONMENT=production > "frontend/.env"
             echo NODE_ENV=production >> "frontend/.env"
-            export API_URL=$URL >> "frontend/.env"
-            echo "${API_URL}"
+            echo API_URL=http://$(sed -n 2p .circleci/ansible/inventory.txt):3030 >> "frontend/.env"
             cat frontend/.env
+            cat .circleci/ansible/inventory.txt
 
 
       - run:
