@@ -560,10 +560,10 @@ workflows:
 #            only: [master]
 #     - configure-infrastructure:
 #         requires: [deploy-infrastructure]    #require ,deploy-infrastructure ,test
-#     - run-migrations:
-#         requires: [configure-infrastructure]  #,require configure-infrastructure ,pre-test
-      - deploy-frontend:
-         requires: [test]  #run-migrations ,test
+      - run-migrations:
+          requires: [test]  #,require configure-infrastructure ,pre-test
+#     - deploy-frontend:
+#        requires: [test]  #run-migrations ,test
 #     - deploy-backend:
 #         requires: [test] #run-migrations ,test,
 #     - smoke-test:
