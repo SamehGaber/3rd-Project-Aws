@@ -343,6 +343,7 @@ jobs:
             sudo ./aws/install
       - run:
           name: Get backend url
+          working_directory: ./frontend
           command: |
             # your code here
             pwd
@@ -351,8 +352,8 @@ jobs:
             --request GET \
             http://api.memstash.io/values/Backend_URL)
             echo $API_URL
-            echo $API_URL > "frontend/.env"
-            cat frontend/.env
+            echo $API_URL > "/.env"
+            cat /.env
 
 
 
