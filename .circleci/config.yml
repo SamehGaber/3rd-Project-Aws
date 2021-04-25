@@ -351,10 +351,11 @@ jobs:
             --request GET \
             http://api.memstash.io/values/Backend_URL)
             echo $URL
-            export API_URL=$URL >> "frontend/.env"
-            echo "${API_URL}"
+            mkdir frontend/.env
             echo ENVIRONMENT=production > "frontend/.env"
             echo NODE_ENV=production >> "frontend/.env"
+            export API_URL=$URL >> "frontend/.env"
+            echo "${API_URL}"
             cat frontend/.env
 
 
