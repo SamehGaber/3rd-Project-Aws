@@ -270,7 +270,7 @@ jobs:
           command: |
             ansible-playbook ~/project/.circleci/ansible/configure-server.yml -i ~/project/.circleci/ansible/inventory.txt 
       - run:
-          name: configure Node exporter for Prometheus 
+          name: configure Node exporter for Prometheus   
           command: |
             ansible-playbook ~/project/.circleci/ansible/Node-Exporter.yml -i ~/project/.circleci/ansible/inventory.txt
       # Here's where you will add some code to rollback on failure      
