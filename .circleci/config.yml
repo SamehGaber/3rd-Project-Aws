@@ -532,14 +532,14 @@ jobs:
 workflows:
   default:
     jobs:
-#     - pre-test:
-#         filters:
-#           branches:
-#             only: [test-feature-branch]
-      - test:
+      - pre-test:
           filters:
             branches:
               only: [test-feature-branch]
+#     - test:
+#         filters:
+#           branches:
+#             only: [test-feature-branch]
 #     - build-frontend:
 #        context:
 #         - SLACK_ACCESS_TOKEN
@@ -560,8 +560,8 @@ workflows:
 #            only: [master]
 #     - configure-infrastructure:
 #         requires: [deploy-infrastructure]    #require ,deploy-infrastructure ,test
-      - run-migrations:
-          requires: [test]  #,require configure-infrastructure ,pre-test
+#     - run-migrations:
+#         requires: [test]  #,require configure-infrastructure ,pre-test
 #     - deploy-frontend:
 #        requires: [run-migrations]  #run-migrations ,test
 #     - deploy-backend:
