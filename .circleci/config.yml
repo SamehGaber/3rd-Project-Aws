@@ -347,13 +347,14 @@ jobs:
           command: |
             # your code here
             # http://18.236.164.143:3030
-            export API_URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
+            export URL=$(curl -H "Content-Type: text/plain" -H "token: 0279bc18-c002-44d8-a814-575be01ed402" \
             --request GET \
             http://api.memstash.io/values/Backend_URL)
-            echo $API_URL
+            echo $URL
+            export API_URL=$URL >> "frontend/.env"
+            echo "${API_URL}"
             echo ENVIRONMENT=production > "frontend/.env"
             echo NODE_ENV=production >> "frontend/.env"
-            echo $API_URL >> "frontend/.env"
             cat frontend/.env
 
 
@@ -530,14 +531,14 @@ jobs:
 workflows:
   default:
     jobs:
-      - pre-test:
-          filters:
-            branches:
-              only: [test-feature-branch]
-#     - test:
+#     - pre-test:
 #         filters:
 #           branches:
 #             only: [test-feature-branch]
+      - test:
+          filters:
+            branches:
+              only: [test-feature-branch]
 #     - build-frontend:
 #        context:
 #         - SLACK_ACCESS_TOKEN
@@ -560,10 +561,10 @@ workflows:
 #         requires: [deploy-infrastructure]    #require ,deploy-infrastructure ,test
 #     - run-migrations:
 #         requires: [configure-infrastructure]  #,require configure-infrastructure ,pre-test
-#     - deploy-frontend:
-#        requires: [run-migrations]  #run-migrations ,test
-#     - deploy-backend:
-#         requires: [run-migrations] #run-migrations ,test,
+      - deploy-frontend:
+         requires: [test]  #run-migrations ,test
+      - deploy-backend:
+          requires: [test] #run-migrations ,test,
 #     - smoke-test:
 #        requires: [deploy-backend,deploy-frontend] #deploy-backend, deploy-frontend
 #     - cloudfront-update:
